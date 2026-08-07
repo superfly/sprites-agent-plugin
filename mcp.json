@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "sprites": {
+      "type": "streamable-http",
+      "url": "https://sprites.dev/mcp"
+    }
+  }
+}
