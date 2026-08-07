@@ -5,11 +5,18 @@
 - Destroying a sprite.
 - Restoring a checkpoint.
 - Killing sessions or stopping services not clearly owned by the current task.
-- Widening outbound network policy.
+- Changing outbound network policy in either direction.
 - Exposing a new public HTTP surface.
 - Broad destructive filesystem commands inside a sprite.
 
 Resolve exact resource names and inspect current state before these operations.
+
+## Network policy replaces, it does not merge
+
+`policy_network_update` overwrites the entire rule set. A change intended to
+narrow or add a single domain will silently drop every rule you did not send.
+Always read the current policy with `policy_network_get`, build the complete
+intended set from it, and confirm that full set with the user before writing.
 
 ## Create a checkpoint first
 

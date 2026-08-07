@@ -4,9 +4,10 @@ The official portable Agent Plugin for [Sprites](https://sprites.dev): isolated,
 persistent cloud development environments that agents can create, operate,
 checkpoint, and clean up.
 
-The package targets [Agent Plugins v1.0.0](https://agent-plugins.org/specification).
-It connects compatible clients to the hosted Sprites MCP server and bundles
-Agent Skills for common workflows. There is no local server process to install.
+The package targets [Agent Plugins v1.0.0](https://agent-plugins.org/specification),
+currently a Working Draft. It connects compatible clients to the hosted Sprites
+MCP server and bundles Agent Skills for common workflows. There is no local
+server process to install.
 
 ## What it provides
 
@@ -38,17 +39,23 @@ for its current local, Git, workspace, or marketplace install flow.
 ## Current client compatibility
 
 The Agent Plugins project currently lists VS Code, Cursor, GitHub Copilot,
-ChatGPT and Codex, and Kiro as compatible clients. This package is designed to
-replace the reusable skills-and-MCP core of the existing Codex and Cursor
-packages; marketplace publication remains a separate client-owned step.
+ChatGPT and Codex, and Kiro as compatible clients. All five load Agent Skills
+and speak Streamable HTTP MCP, so the single server entry in `mcp.json` reaches
+every one of them. This package is designed to replace the reusable
+skills-and-MCP core of the existing Codex and Cursor packages; marketplace
+publication remains a separate client-owned step.
 
 Google's August 2026 announcement says Agents CLI and Data Agent Kit currently
 support the format and that support is expected in more Google products. It
 mentions Antigravity as an agent that can consume Agents CLI's skills, but does
 not identify Antigravity itself as a conforming Agent Plugins client. Keep the
 existing Antigravity package for its hooks, rules, and native installation until
-that support is documented and tested. Grok is likewise not on the current
-compatible-client list.
+that support is documented and tested.
+
+Grok and Claude Code are likewise not on the current compatible-client list.
+Keep their existing packages too — the Claude package in particular enforces
+destructive-operation confirmation through a pre-tool hook, which v1 has no
+portable equivalent for.
 
 ## Example prompts
 
@@ -113,8 +120,8 @@ rules. They do not make network calls.
 ## Source material
 
 This package consolidates the reusable behavior from the existing Sprites
-plugins for Codex, Cursor, Antigravity, and Grok. The MCP tool model is checked
-against the Sprites platform source and the public
+plugins for Codex, Cursor, Antigravity, Grok, and Claude Code. The MCP tool
+model is checked against the Sprites platform source and the public
 [Sprites MCP server reference](https://github.com/superfly/sprites-mcp).
 See [migration coverage](docs/migration-coverage.md) for the artifact-by-artifact
 mapping and the client-specific behavior that Agent Plugins v1 cannot carry.
