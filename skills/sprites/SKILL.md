@@ -72,7 +72,10 @@ the MCP tool accepts a shell command string. Use a shell explicitly only when
 the requested operation needs shell syntax. Prefer non-interactive flags.
 
 For environment bootstrap, repositories, or file-transfer work, read
-[remote compute](references/compute.md) and [files](references/files.md).
+[remote compute](references/compute.md) and [files](references/files.md). When
+copying local project state into a sprite, follow the sync boundaries in
+[deployment](references/deployment.md); never sync `.git/`, dependency caches,
+or local secrets by default.
 
 ### Run a service
 

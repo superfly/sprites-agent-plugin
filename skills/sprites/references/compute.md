@@ -16,6 +16,8 @@ performed remotely.
      can access.
    - For small generated files, use the reliable patterns in
      [files.md](files.md).
+   - When copying local project state, follow the sync boundaries in
+     [deployment.md](deployment.md).
    - Ask how private code should be transferred when no authorized path exists;
      never invent credentials.
 5. Run bounded work with `exec`; use services for processes that must persist.
