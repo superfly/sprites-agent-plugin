@@ -1,7 +1,7 @@
 # Sprites MCP tools
 
 The live MCP server's `tools/list` response is authoritative. This reference
-summarizes the current 18-tool surface.
+summarizes the current 24-tool surface (aligned with `superfly/sprites-mcp` README).
 
 ## Reading the risk column
 
@@ -49,6 +49,22 @@ Every sprite-scoped tool requires the exact `sprite` name.
 
 Follow the live input schema rather than flattening arguments into one shell
 string.
+
+## Files
+
+| Tool | Risk | Purpose |
+| --- | --- | --- |
+| `file_read` | read | Read a file's contents. Returns an embedded text or binary resource. |
+| `file_list` | read | List the entries of a directory. |
+| `file_write` | write | Write contents to a file. |
+| `file_copy` | write | Copy a file or directory. |
+| `file_rename` | write | Rename or move a file or directory. |
+| `file_delete` | destructive | Delete a file or directory. |
+
+Paths resolve against `workingDir`, and access is confined to the sprite's
+root. Prefer these tools over shell quoting tricks; fall back to `exec` only
+when no file tool fits. Confirm path and scope before `file_delete`; inspect
+destinations before `file_rename` / `file_copy` overwrites.
 
 ## Checkpoints
 

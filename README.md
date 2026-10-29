@@ -18,8 +18,8 @@ server process to install.
 - Safety guidance for destructive operations, public services, secrets, and
   outbound network policy.
 
-The MCP server currently exposes 18 tools for sprite management, command
-execution, checkpoints, services, and network policy. Its live `tools/list`
+The MCP server currently exposes 24 tools for sprite management, command
+execution, files, checkpoints, services, and network policy. Its live `tools/list`
 response is authoritative.
 
 ## Install

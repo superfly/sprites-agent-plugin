@@ -39,6 +39,8 @@ Use the smallest direct tool for the request:
 - Sprite lifecycle: `list_sprites`, `create_sprite`, `destroy_sprite`.
 - One-off commands: `exec`; inspect or stop sessions with `exec_list` and
   `exec_kill`.
+- Files: `file_list`, `file_read`, `file_write`, `file_copy`, `file_rename`,
+  `file_delete` (`workingDir` + path flags per live schema).
 - Services: `service_list`, `service_get`, `service_create`, `service_start`,
   `service_stop`, `service_logs`.
 - Checkpoints: `checkpoint_create`, `checkpoint_list`, `checkpoint_get`,
