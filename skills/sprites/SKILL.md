@@ -12,8 +12,11 @@ metadata:
 
 Sprites are isolated, persistent Linux environments with their own filesystem,
 URL, services, checkpoints, and outbound network policy. The host agent runs
-outside the sprite. Use the hosted Sprites MCP tools as the control plane; do
-not treat the host's local shell or workspace as the sprite runtime.
+outside the sprite. Use the Sprites tools of the hosted Fly MCP server (this
+plugin's `sprites` server, `https://mcp.fly.io`) as the control plane; do not
+treat the host's local shell or workspace as the sprite runtime. The same
+connection may list tools for other Fly.io products when the user granted them;
+they are outside this skill.
 
 ## Golden path
 
@@ -36,7 +39,8 @@ OAuth are unavailable, follow [authentication and setup](references/authenticati
 
 Use the smallest direct tool for the request:
 
-- Sprite lifecycle: `list_sprites`, `create_sprite`, `destroy_sprite`.
+- Sprite lifecycle: `list_sprites`, `get_sprite_info`, `create_sprite`,
+  `destroy_sprite`.
 - One-off commands: `exec`; inspect or stop sessions with `exec_list` and
   `exec_kill`.
 - Files: `file_list`, `file_read`, `file_write`, `file_copy`, `file_rename`,

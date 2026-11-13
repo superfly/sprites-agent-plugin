@@ -1,10 +1,14 @@
 # Authentication and setup
 
-The plugin connects only to the hosted Streamable HTTP MCP endpoint:
+The plugin connects only to the hosted Fly MCP, a Streamable HTTP MCP endpoint
+registered under the server name `sprites`:
 
 ```text
-https://sprites.dev/mcp
+https://mcp.fly.io
 ```
+
+The Fly MCP serves the Sprites tools and, depending on the grant, tools for
+other Fly.io products. Use only the Sprites tools for Sprites workflows.
 
 The installing client owns OAuth discovery, browser interaction, credential
 storage, and refresh. The package contains no API token and Agent Plugins v1 has
@@ -29,20 +33,26 @@ a second copy of the server to hide a plugin-loading problem.
 
 ### Tools exist but calls require authorization
 
-1. Complete the browser OAuth flow presented by the client.
-2. Choose the intended Fly.io organization.
-3. Review the connector token restrictions.
+1. Complete the browser OAuth flow presented by the client; sign-in goes
+   through Fly.io.
+2. Choose the intended Fly.io organization and grant the Sprites permissions.
+3. Review the grant's restrictions, such as the name prefix and Sprite limit.
 4. Retry the original MCP call once.
+
+A user who previously authorized the previous `https://sprites.dev/mcp` endpoint
+must authorize again: the two endpoints hold separate OAuth grants.
 
 Do not ask the user to paste an API token into chat or a shell and do not start
 an independent CLI login.
 
 ### Calls are authenticated but restricted
 
-OAuth connector tokens may restrict sprite names by prefix, cap sprite
-creation, require a label, or expire.
+The grant may restrict sprite names by prefix, cap sprite creation, require a
+label, or expire.
 
-- Read the required prefix from the API error; do not assume it is `mcp-`.
+- When `get_fly_context` is available, call it to read the Sprites restrictions
+  (`name_prefix`, `max_sprites_total`). Otherwise read the required prefix from
+  the API error. Do not assume it is `mcp-`.
 - If a user-requested bare name can be mapped unambiguously, retry once as
   `<required-prefix><requested-name>` and report the actual name.
 - Do not loop on a creation cap or policy denial.
@@ -51,8 +61,9 @@ creation, require a label, or expire.
 
 ### Expected sprite is absent
 
-Confirm the selected OAuth organization. Restricted tokens can hide sprites
-outside their allowed prefix or label. Use names returned by `list_sprites` and
+Confirm the selected OAuth organization and that Sprites access was granted at
+consent. Restricted grants can hide sprites outside their allowed prefix or
+label. Use names returned by `list_sprites` and
 never guess.
 
 ### Empty list

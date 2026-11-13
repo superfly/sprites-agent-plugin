@@ -1,21 +1,27 @@
 # Sprites MCP tools
 
 The live MCP server's `tools/list` response is authoritative. This reference
-summarizes the current 24-tool surface (aligned with `superfly/sprites-mcp` README).
+summarizes the 27 Sprites tools served by the Fly MCP at `https://mcp.fly.io`
+(names aligned with the [Fly MCP guide](https://mcp.fly.io/guide.md)).
+
+Depending on the grant, the same connection may also list tools for other
+Fly.io products (apps, Machines, volumes, secrets, Managed Postgres) and
+account tools such as `get_fly_context`, which reports the grant's Sprites
+restrictions. They are outside this reference; a listed tool is not permission
+to use it.
 
 ## Reading the risk column
 
 The `Risk` column below is editorial guidance for deciding when to confirm with
 the user. It is not the server's own classification.
 
-The server derives MCP annotations from the underlying HTTP method: `GET`
-endpoints get `readOnlyHint: true` and every other endpoint gets
-`destructiveHint: true`. So `create_sprite`, `exec`, `checkpoint_create`,
-`service_create`, and `service_start` all arrive annotated destructive even
-though they are ordinary write operations. Do not treat that mismatch as a bug,
-and do not use `destructiveHint` alone to decide whether to ask permission.
+The server's own MCP annotations can be coarser than this column: ordinary
+write operations such as `create_sprite`, `exec`, `checkpoint_create`,
+`service_create`, and `service_start` may arrive annotated `destructiveHint:
+true`. Do not treat that mismatch as a bug, and do not use `destructiveHint`
+alone to decide whether to ask permission.
 
-Every sprite-scoped tool requires the exact `sprite` name.
+Sprite-scoped tools require the exact `sprite` name.
 
 ## Sprite management
 
@@ -24,6 +30,9 @@ Every sprite-scoped tool requires the exact `sprite` name.
 | `list_sprites` | read | List visible sprites; supports pagination and optional prefix filtering. |
 | `create_sprite` | write | Create a sprite by name, optionally waiting for capacity. |
 | `destroy_sprite` | destructive | Permanently destroy a sprite by name. |
+| `get_sprite_info` | read | Read a sprite's metadata without waking it. |
+| `search_sprite_mentions` | read | Find up to 20 visible sprites by name prefix, for composer mentions. |
+| `open_sprite_inspector` | read | Open the read-only Sprite Inspector in clients that support MCP Apps UI. |
 
 - `list_sprites` — `prefix` (string, optional), `max_results` (integer,
   optional), `continuation_token` (string, optional). Pass the returned token
@@ -31,6 +40,9 @@ Every sprite-scoped tool requires the exact `sprite` name.
 - `create_sprite` — `name` (string, required), `wait_for_capacity` (boolean,
   optional). Set `wait_for_capacity` rather than polling or retrying in a loop.
 - `destroy_sprite` — `name` (string, required).
+- `get_sprite_info`, `search_sprite_mentions`, `open_sprite_inspector` — follow
+  the live input schema. Reading metadata does not wake a sprite; reading
+  runtime state, services, logs, or files may.
 
 ## Commands
 

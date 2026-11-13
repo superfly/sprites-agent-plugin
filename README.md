@@ -5,21 +5,26 @@ persistent cloud development environments that agents can create, operate,
 checkpoint, and clean up.
 
 The package targets [Agent Plugins v1.0.0](https://agent-plugins.org/specification),
-currently a Working Draft. It connects compatible clients to the hosted Sprites
-MCP server and bundles Agent Skills for common workflows. There is no local
-server process to install.
+currently a Working Draft. It connects compatible clients to the hosted
+[Fly MCP](https://mcp.fly.io) server, which serves the Sprites tools, and
+bundles Agent Skills for common workflows. There is no local server process to
+install.
 
 ## What it provides
 
-- A Streamable HTTP MCP connection to `https://sprites.dev/mcp`.
+- A Streamable HTTP MCP connection to `https://mcp.fly.io`, registered under
+  the server name `sprites`.
 - OAuth handled by the installing client.
 - Skills for day-to-day Sprites work, focused create/run/service/checkpoint/list/
   cleanup workflows, setup diagnostics, and an end-to-end smoke test.
 - Safety guidance for destructive operations, public services, secrets, and
   outbound network policy.
 
-The MCP server currently exposes 24 tools for sprite management, command
-execution, files, checkpoints, services, and network policy. Its live `tools/list`
+The Fly MCP currently exposes 27 Sprites tools for sprite discovery and
+management, command execution, files, checkpoints, services, and network policy.
+Depending on what is granted at consent, the same connection can also expose
+tools for other Fly.io products (apps, Machines, volumes, secrets, Managed
+Postgres); the skills in this package cover Sprites only. The live `tools/list`
 response is authoritative.
 
 ## Install
@@ -28,9 +33,19 @@ Install this repository or directory with a client that supports the Agent
 Plugins v1 format. The client discovers `plugin.json`, the immediate children of
 `skills/`, and `mcp.json` at fixed locations.
 
-On first MCP use, complete the browser OAuth flow and select the intended Fly.io
-organization. Restricted connector tokens may enforce a sprite-name prefix,
-creation cap, label, or expiry.
+On first MCP use, complete the browser OAuth flow: sign in through Fly.io,
+select the intended organization, and grant the Sprites permissions. Grant only
+what you need; the consent screen also offers other Fly.io products. A grant may
+enforce a sprite-name prefix, creation cap, label, or expiry.
+
+### Upgrading from the `sprites.dev/mcp` endpoint
+
+Earlier revisions of this package connected to the Sprites MCP server at
+`https://sprites.dev/mcp`. We are transitioning to the new Fly MCP server, and
+the package now connects to it at `https://mcp.fly.io`. The server name (`sprites`) and all tool
+names are unchanged, so existing permission rules keep working. The two
+endpoints hold separate OAuth grants: after updating, every existing user must
+complete the browser authorization once more.
 
 Agent Plugins standardizes the package contents, not marketplace distribution,
 installation UI, or permissions. Follow the installing client's documentation
@@ -96,7 +111,7 @@ older client-specific packages without adding non-standard package structure.
 ## Authentication and attribution
 
 Agent Plugins v1 deliberately leaves OAuth discovery, user interaction, and
-credential storage to the client. The Sprites server supports the OAuth flow
+credential storage to the client. The Fly MCP server supports the OAuth flow
 expected by modern MCP clients; no token is stored in this repository.
 
 The package does not send `Fly-Client-Agent` attribution headers. A single
@@ -122,14 +137,14 @@ rules. They do not make network calls.
 This package consolidates the reusable behavior from the existing Sprites
 plugins for Codex, Cursor, Antigravity, Grok, and Claude Code. The MCP tool
 model is checked against the Sprites platform source and the public
-[Sprites MCP server reference](https://github.com/superfly/sprites-mcp).
+[Fly MCP guide](https://mcp.fly.io/guide.md).
 See [migration coverage](docs/migration-coverage.md) for the artifact-by-artifact
 mapping and the client-specific behavior that Agent Plugins v1 cannot carry.
 
 - [Agent Plugins specification](https://agent-plugins.org/specification)
 - [Agent Skills specification](https://agentskills.io/specification)
 - [Sprites API](https://sprites.dev/api)
-- [Sprites remote MCP documentation](https://docs.sprites.dev/integrations/remote-mcp/)
+- [Fly MCP guide](https://mcp.fly.io/guide.md)
 
 ## License
 

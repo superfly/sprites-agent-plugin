@@ -55,8 +55,8 @@ class AgentPluginRepositoryTests(unittest.TestCase):
         self.assertEqual(server["type"], "streamable-http")
         parsed = urlsplit(server["url"])
         self.assertEqual(parsed.scheme, "https")
-        self.assertEqual(parsed.netloc, "sprites.dev")
-        self.assertEqual(parsed.path, "/mcp")
+        self.assertEqual(parsed.netloc, "mcp.fly.io")
+        self.assertEqual(parsed.path, "")
 
     def test_portable_config_does_not_misattribute_the_client(self) -> None:
         server = load_json(ROOT / "mcp.json")["mcpServers"]["sprites"]
