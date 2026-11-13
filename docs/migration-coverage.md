@@ -55,4 +55,4 @@ skills, not as a native plugin client. Treat Antigravity replacement as
 unverified on the same grounds.
 
 Before deleting a legacy repository, test installation, OAuth, skill discovery,
-all 24 live tools, and destructive-action behavior in each target client.
+all 27 live Sprites tools, and destructive-action behavior in each target client.

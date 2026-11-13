@@ -3,7 +3,7 @@
   "mcpServers": {
     "sprites": {
       "type": "streamable-http",
-      "url": "https://sprites.dev/mcp"
+      "url": "https://mcp.fly.io"
     }
   }
 }
